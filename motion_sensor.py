@@ -26,6 +26,7 @@ class MotionSensor(threading.Thread):
         self.show_camera = show_camera
         self.on_motion_call = on_motion_call
         self.time_thresh_hold = time_thresh_hold
+        self.loc_path = []
         
     def process_image(self, prior_img_data, img_data):
         if prior_img_data == None: return (-1, -1)
@@ -54,9 +55,18 @@ class MotionSensor(threading.Thread):
             if x != -1: #a specific location was found
                 current_time = time.time()
                 if current_time - prior_time > self.time_thresh_hold:
-                    print "------------------------------------------>        end of motion recording"
+                    last_p_y = None
+                    dy_sum = 0
+                    for p_x, p_y in self.loc_path:
+                        if last_p_y == None:
+                            last_p_y = p_y
+                            continue
+                        dy_sum += (last_p_y - p_y)
+                    print dy_sum
+                    self.loc_path = []
                 self.on_motion_call()
                 #actions that need to be taken when motion occures
+                self.loc_path.append((x, y))
                 print str(motion_count) + ": MOTION!                      " + str(time.time()) + " loc: " + str(x) +", " + str(y)
                 motion_count += 1
                 prior_time = current_time
