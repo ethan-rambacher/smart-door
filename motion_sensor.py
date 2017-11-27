@@ -30,8 +30,8 @@ class MotionSensor(threading.Thread):
         
     def process_image(self, prior_img_data, img_data):
         if prior_img_data == None: return (-1, -1)
-        for x in range(0, self.res_x, self.step_x):
-            for y in range(0, self.res_y, self.step_y):
+        for x in xrange(self.res_x - 1, -1, -self.step_x):
+            for y in xrange(self.res_y - 1, -1, -self.step_y):
                 l = (x*y>> 3)*13%3 #arbitrary hasher
                 prior_pixel = prior_img_data[y][x][l]
                 pixel = img_data[y][x][l]
@@ -55,19 +55,20 @@ class MotionSensor(threading.Thread):
             if x != -1: #a specific location was found
                 current_time = time.time()
                 if current_time - prior_time > self.time_thresh_hold:
-                    last_p_y = None
-                    dy_sum = 0
+                    self.on_motion_call(x, y)
+                    '''last_p_x = None
+                    dx_sum = 0
                     for p_x, p_y in self.loc_path:
-                        if last_p_y == None:
-                            last_p_y = p_y
+                        if last_p_x == None:
+                            last_p_x = p_x
                             continue
-                        dy_sum += (last_p_y - p_y)
-                    print dy_sum
+                        dx_sum += (last_p_x - p_x)
+                    print "--------------------------------------------------------: " + str(dx_sum)'''
                     self.loc_path = []
-                self.on_motion_call()
+                #self.on_motion_call(x, y)
                 #actions that need to be taken when motion occures
                 self.loc_path.append((x, y))
-                print str(motion_count) + ": MOTION!                      " + str(time.time()) + " loc: " + str(x) +", " + str(y)
+                #print str(motion_count) + ": MOTION!                      " + str(time.time()) + " loc: " + str(x) +", " + str(y)
                 motion_count += 1
                 prior_time = current_time
                 
