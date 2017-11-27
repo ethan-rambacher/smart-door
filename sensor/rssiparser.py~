@@ -1,0 +1,7 @@
+import sys
+
+threshold = -70 # RSSI threshold
+inRange = False # is someone within range of the hub?
+
+for line in sys.stdin:
+    if 
