@@ -3,64 +3,52 @@ import threading
 
 
 class BluetoothRanger(threading.Thread):
-    def __init__(self,_tags,_threshold,_setFunc,_btBuffer):
-        self.tags = _tags
-        self.rssi = {}
-        self.thres = _threshold
-        self.setFunc = _setFunc
-	self.buffer = _btBuffer
+	def __init__(self,_tags,_threshold,_setFunc,_btBuffer):
+		self.tags = _tags
+		self.rssi = {}
+		self.thres = _threshold
+		self.setFunc = _setFunc
+		self.buffer = _btBuffer
 
-    def personInRange(self):
-        for tag in self.tags:
-            if (self.rssi[tag] > self.thres):
-                return True
-        return False
+	def personInRange(self):
+		for tag in self.tags:
+			if (self.rssi[tag] > self.thres):
+				return True
+		return False
 
     def run(self):
         while True:
-	    print("waiting for line...")
-            line = self.buffer.readline()
-	    print(line)
+	    	print("waiting for line...")
+    		line = self.buffer.readline()
+	    	print(line)
             if (line[0] == '>'): # new HCI Event
-		print(line)
+				print(line)
                 if (line[-3:-1] == "26"):
+					print("Parsing data for plen 26\n")
                     # parse data for plen == 26
-		    print("Parsing data for plen 26\n")
-                    line = self.buffer.readline() # get to address line
-		    print(line)
-                    address = line[0:17]
-		    print("Address: "+address)
+					i=0
+					address = False
+					RSSI = False
+					while (i<10 and (not address and not RSSI)):
+						line = self.buffer.readline().trim()
+						if (line.find("bdaddr") != -1):
+							address = line[7:24]
+						if (line.find("RSSI:") != -1):
+							RSSI = int(line[6:])
+		    		print("Address: "+address)
+					print("--RSSI: "+RSSI)
                     if (address in self.tags):
-                        for i in range(8):
-                            line = self.buffer.readline()
-                            rssi = int(line[11:])
-
-                            # data has been gathered
-                        self.rssi[address] = rssi
-			print("-RSSI: "+rssi)
-	                self.setFunc(rssi)
-
+                        # only update data if the data is for an iTag
+						print("Updating data")
+                        self.rssi[address] = RSSI
+	                	self.setFunc(RSSI)
                     else:
+						print("Different device")
                         break # data was for a different device, so pass
-                else:
-                    # parse data for plen == 30
-		    print("Parsing data for plen 30\n")
-#                        for i in range(5):
- #                           line = self.buffer.readline()
-  #                      address = line
-#                        if (address in self.tags):
-# 	                        for i in range(3):
-#                                line = self.buffer.readline()
-#                                rssi = line
 
-                            # data has been gathered
-#                            self.rssi[address] = rssi
-
-current_rssi = 0
 
 def setRSSI(_rssi):
-    current_rssi = _rssi
-    print("RSSI="+current_rssi)
+    print("RSSI="+_rssi)
 
 # MAIN #
 bt_buffer = os.popen("sudo hcidump & sudo hcitool lescan --duplicates")
