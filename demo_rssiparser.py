@@ -16,12 +16,12 @@ class BluetoothRanger(threading.Thread):
 				return True
 		return False
 
-    def run(self):
-        while True:
-	    	print("waiting for line...")
-    		line = self.buffer.readline()
-	    	print(line)
-            if (line[0] == '>'): # new HCI Event
+	def run(self):
+		while True:
+			print("waiting for line...")
+			line = self.buffer.readline()
+			print(line)
+			if (line[0] == '>'): # new HCI Event
 				print(line)
                 if (line[-3:-1] == "26"):
 					print("Parsing data for plen 26\n")
@@ -35,15 +35,16 @@ class BluetoothRanger(threading.Thread):
 							address = line[7:24]
 						if (line.find("RSSI:") != -1):
 							RSSI = int(line[6:])
+						i += 1
 		    		print("Address: "+address)
 					print("--RSSI: "+RSSI)
-                    if (address in self.tags):
+                    if (address in self.tags and RSSI):
                         # only update data if the data is for an iTag
 						print("Updating data")
                         self.rssi[address] = RSSI
 	                	self.setFunc(RSSI)
                     else:
-						print("Different device")
+						print("Different device, or RSSI not found")
                         break # data was for a different device, so pass
 
 
