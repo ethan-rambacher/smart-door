@@ -8,7 +8,7 @@ class SmartDoor(object):
         self.thresh_hold_x = 500
         self.people_in_range = False
         self.bt_buffer = os.popen("sudo hcidump & sudo hcitool lescan --duplicates")
-        self.br = BluetoothRanger({"FF:FF:FF","AA:AA:AA"},-50,self.set_people_in_range, self.bt_buffer)
+        self.br = BluetoothRanger({"FF:FF:80:00:86:56"},-50,self.set_people_in_range, self.bt_buffer)
     
     def motion_detected(self, x, y):
         if x > self.thresh_hold_x:
