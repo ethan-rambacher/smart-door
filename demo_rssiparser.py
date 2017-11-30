@@ -23,9 +23,9 @@ class BluetoothRanger(threading.Thread):
 			print(line)
 			if (line[0] == '>'): # new HCI Event
 				print(line)
-                if (line[-3:-1] == "26"):
+				if (line[-3:-1] == "26"):
 					print("Parsing data for plen 26\n")
-                    # parse data for plen == 26
+					# parse data for plen == 26
 					i=0
 					address = False
 					RSSI = False
@@ -36,7 +36,7 @@ class BluetoothRanger(threading.Thread):
 						if (line.find("RSSI:") != -1):
 							RSSI = int(line[6:])
 						i += 1
-		    		print("Address: "+address)
+					print("Address: "+address)
 					print("--RSSI: "+RSSI)
                     if (address in self.tags and RSSI):
                         # only update data if the data is for an iTag
