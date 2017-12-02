@@ -18,38 +18,38 @@ class BluetoothRanger(threading.Thread):
 
 	def run(self):
 		while True:
-			print("waiting for line...")
+			#print("waiting for line...")
 			line = self.buffer.readline()
-			print(line)
+			#print(line)
 			if (line[0] == '>'): # new HCI Event
-				print(line)
+				#print(line)
 				if (line[-3:-1] == "26"):
 					print("Parsing data for plen 26\n")
 					# parse data for plen == 26
 					i=0
 					address = False
 					RSSI = False
-					while (i<10 and (not address and not RSSI)):
-						line = self.buffer.readline().trim()
+					while (i<10 and (not address or not RSSI)):
+						line = self.buffer.readline().strip()
+						#print("Waiting for data: "+line)
 						if (line.find("bdaddr") != -1):
 							address = line[7:24]
 						if (line.find("RSSI:") != -1):
 							RSSI = int(line[6:])
 						i += 1
-					print("Address: "+address)
-					print("--RSSI: "+RSSI)
-                    if (address in self.tags and RSSI):
-                        # only update data if the data is for an iTag
+					print("Address: "+str(address))
+					print("--RSSI: "+str(RSSI))
+					if (address in self.tags and RSSI):
+						# only update data if the data is for an iTag
 						print("Updating data")
-                        self.rssi[address] = RSSI
-	                	self.setFunc(RSSI)
-                    else:
+						self.rssi[address] = RSSI
+						self.setFunc(RSSI)
+					else:
 						print("Different device, or RSSI not found")
-                        break # data was for a different device, so pass
 
 
 def setRSSI(_rssi):
-    print("RSSI="+_rssi)
+    print("************************************************************************************RSSI="+str(_rssi))
 
 # MAIN #
 bt_buffer = os.popen("sudo hcidump & sudo hcitool lescan --duplicates")
