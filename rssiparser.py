@@ -8,7 +8,7 @@ class BluetoothRanger(threading.Thread):
         self.rssi = {}
         self.thres = _threshold
         self.setFunc = _setFunc
-	self.buffer = _btBuffer
+	    self.buffer = _btBuffer
 
     def personInRange(self):
         for tag in self.tags:
