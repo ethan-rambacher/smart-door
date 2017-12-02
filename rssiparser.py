@@ -3,7 +3,7 @@ import threading
 
 
 class BluetoothRanger(threading.Thread):
-    def __init__(self,_tags,_threshold,_btBuffer):
+    def __init__(self,_tags,_threshold):
         super(BluetoothRanger, self).__init__()
         #state variable intialization
         self.tags = _tags
@@ -24,7 +24,7 @@ class BluetoothRanger(threading.Thread):
             line = self.buffer.readline()
             if (line[0] == '>'): # new HCI Event
                 if (line[-3:-1] == "26"):
-                    print("Parsing data for plen 26\n")
+                    #print("Parsing data for plen 26\n")
                     # parse data for plen == 26
                     i=0
                     address = False
@@ -37,12 +37,13 @@ class BluetoothRanger(threading.Thread):
                         if (line.find("RSSI:") != -1):
                             RSSI = int(line[6:])
                         i += 1
-                    print("Address: "+str(address))
-                    print("--RSSI: "+str(RSSI))
+                    #print("Address: "+str(address))
+                    #print("--RSSI: "+str(RSSI))
                     if (address in self.tags and RSSI):
                         # only update data if the data is for an iTag
-                        print("Updating data")
+                        #print("Updating data")
                         self.rssi[address] = RSSI
-                        self.in_range = personInRange(RSSI)
+                        self.in_range =self.personInRange()
                     else:
-                        print("Different device, or RSSI not found")
+			pass
+                        #print("Different device, or RSSI not found")
