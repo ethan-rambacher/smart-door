@@ -3,12 +3,14 @@ import threading
 
 
 class BluetoothRanger(threading.Thread):
-    def __init__(self,_tags,_threshold,_setFunc,_btBuffer):
+    def __init__(self,_tags,_threshold,_btBuffer):
+        super(BluetoothRanger, self).__init__()
+        #state variable intialization
         self.tags = _tags
         self.rssi = {}
         self.thres = _threshold
-        self.setFunc = _setFunc
-        self.buffer = _btBuffer
+        self.in_range = False
+        self.buffer = os.popen("sudo hcidump & sudo hcitool lescan --duplicates")
 
     def personInRange(self):
         for tag in self.tags:
@@ -41,6 +43,6 @@ class BluetoothRanger(threading.Thread):
                         # only update data if the data is for an iTag
                         print("Updating data")
                         self.rssi[address] = RSSI
-                        self.setFunc(RSSI)
+                        self.in_range = personInRange(RSSI)
                     else:
                         print("Different device, or RSSI not found")
