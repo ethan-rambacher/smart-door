@@ -4,7 +4,7 @@ import os
 
 class SmartDoor(object):
     def __init__(self):
-        self.ms = MotionSensor(75, 40, 1000, 1000, 20, 20, True, self.motion_detected, 0.8)
+        self.ms = MotionSensor(75, 40, 1000, 1000, 20, 20, False, self.motion_detected, 0.8)
         self.thresh_hold_x = 500
         #self.people_in_range = False
         #self.bt_buffer = os.popen("sudo hcidump & sudo hcitool lescan --duplicates")
