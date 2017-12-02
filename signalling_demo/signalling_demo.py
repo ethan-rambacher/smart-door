@@ -1,6 +1,7 @@
 from dumby_motion_sensor import MotionSensor
 from dumby_rssiparser import BluetoothRanger
 import os
+import random as rand
 
 class SmartDoor(object):
     def __init__(self):
@@ -9,12 +10,26 @@ class SmartDoor(object):
         self.br = BluetoothRanger({"FF:FF:80:00:86:56"},-80)
 
     def motion_detected(self, x, y):
-        if x > self.thresh_hold_x:
-            print "EXIT: " + str(x)
-            print "BT in range: " + str(self.br.in_range)
+        print "Recieved Camera Notification"
+        if(self.br.in_range):
+            print "Tag Status: NEARBY "
         else:
-            print "ENTER: " + str(x)
-            print "BT in range: " + str(self.br.in_range)
+            print "Tag Status: FAR AWAY"
+
+        if x > self.thresh_hold_x: #attemtping to exit the room
+            print "Exiting"
+            if not self.br.in_range: #tag status is far away
+                self.alert()
+        else:
+            print "Entering"
+        print "#"*50
+        print "\n"*5
+
+    def alert(self):
+        print "\n$$$ Sending Flag to Alert Subsystem $$$"
+        #YO CAN YOU DO THE SET UP FOR THE LED?
+        # keep led on for 1 second
+
 
     def run(self):
         self.ms.start()

@@ -1,6 +1,7 @@
 import os
 import threading
 import time
+import random as rand
 
 class BluetoothRanger(threading.Thread):
     def __init__(self,_tags,_threshold):
@@ -10,5 +11,5 @@ class BluetoothRanger(threading.Thread):
 
     def run(self):
         while True:
-            time.sleep(0.2)
-            self.in_range = not self.in_range
+            time.sleep(0.1)
+            self.in_range = rand.randint(0, 1) == 1

@@ -16,7 +16,11 @@ class MotionSensor(threading.Thread):
 
     def run(self):
         while True:
-            x = 1
-            y = 1
-            time.sleep(5)
-            self.on_motion_call(rand.randint(0, self.res_x - 1), rand.randint(0, self.res_y - 1))
+            time.sleep(7.89)
+            x = rand.randint(0, self.res_x - 1)
+            y = rand.randint(0, self.res_y - 1)
+            print "#"*50
+            print "Camera Detected Motion: " + str(x)
+            print "Sending Data to Signalling Subsystem"
+            print "-"*50
+            self.on_motion_call(x, y)
