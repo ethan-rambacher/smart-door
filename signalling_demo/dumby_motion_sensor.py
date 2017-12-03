@@ -16,7 +16,7 @@ class MotionSensor(threading.Thread):
 
     def run(self):
         while True:
-            time.sleep(7.89)
+            raw_input("Press Enter to advance...")
             x = rand.randint(0, self.res_x - 1)
             y = rand.randint(0, self.res_y - 1)
             print "#"*50

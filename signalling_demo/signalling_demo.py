@@ -10,23 +10,24 @@ class SmartDoor(object):
         self.br = BluetoothRanger({"FF:FF:80:00:86:56"},-80)
 
     def motion_detected(self, x, y):
-        print "Recieved Camera Notification"
+        print "Signalling Subsytem Recieved Camera Notification"
         if(self.br.in_range):
             print "Tag Status: NEARBY "
         else:
             print "Tag Status: FAR AWAY"
 
         if x > self.thresh_hold_x: #attemtping to exit the room
-            print "Exiting"
+            print "    Motion: EXITING"
             if not self.br.in_range: #tag status is far away
                 self.alert()
         else:
-            print "Entering"
+            print "    Motion: ENTERING"
         print "#"*50
         print "\n"*5
 
     def alert(self):
         print "\n$$$ Sending Flag to Alert Subsystem $$$"
+        os.system("mplayer leave_room.m4a > stupid_data.txt")
         #YO CAN YOU DO THE SET UP FOR THE LED?
         # keep led on for 1 second
 

@@ -1,0 +1,27 @@
+MPlayer 1.3.0 (Debian), built with gcc-7 (C) 2000-2016 MPlayer Team
+
+Playing leave_room.m4a.
+libavformat version 57.71.100 (external)
+libavformat file format detected.
+[mov,mp4,m4a,3gp,3g2,mj2 @ 0x7f8ae47c05e0]Protocol name not provided, cannot determine if input is local or a network protocol, buffers and access patterns cannot be configured optimally without knowing the protocol
+[lavf] stream 0: audio (aac), -aid 0, -alang eng
+Clip info:
+ major_brand: 3gp4
+ minor_version: 0
+ compatible_brands: isom3gp4
+ creation_time: 2017-12-03T21:22:12.000000Z
+ com.android.version: 6.0.1
+Load subtitles in ./
+==========================================================================
+Opening audio decoder: [ffmpeg] FFmpeg/libavcodec audio decoders
+libavcodec version 57.89.100 (external)
+AUDIO: 44100 Hz, 1 ch, floatle, 128.1 kbit/9.07% (ratio: 16007->176400)
+Selected audio codec: [ffaac] afm: ffmpeg (FFmpeg AAC (MPEG-2/MPEG-4 Audio))
+==========================================================================
+AO: [pulse] 44100Hz 1ch floatle (4 bytes per sample)
+Video: no video
+Starting playback...
+A:   0.0 (unknown) of 4.3 (04.3) ??,?% [JA:   0.0 (00.0) of 4.3 (04.3) ??,?% [JA:   0.2 (00.1) of 4.3 (04.3)  0.2% [JA:   0.3 (00.3) of 4.3 (04.3)  0.2% [JA:   0.5 (00.5) of 4.3 (04.3)  0.2% [JA:   0.7 (00.6) of 4.3 (04.3)  0.2% [JA:   0.8 (00.8) of 4.3 (04.3)  0.2% [JA:   1.0 (01.0) of 4.3 (04.3)  0.2% [JA:   1.2 (01.2) of 4.3 (04.3)  0.2% [JA:   1.4 (01.4) of 4.3 (04.3)  0.2% [JA:   1.6 (01.5) of 4.3 (04.3)  0.2% [JA:   1.8 (01.7) of 4.3 (04.3)  0.2% [JA:   2.0 (01.9) of 4.3 (04.3)  0.2% [JA:   2.2 (02.1) of 4.3 (04.3)  0.2% [JA:   2.3 (02.3) of 4.3 (04.3)  0.2% [JA:   2.5 (02.5) of 4.3 (04.3)  0.2% [JA:   2.7 (02.7) of 4.3 (04.3)  0.2% [JA:   2.9 (02.9) of 4.3 (04.3)  0.2% [JA:   3.1 (03.1) of 4.3 (04.3)  0.2% [JA:   3.3 (03.3) of 4.3 (04.3)  0.2% [JA:   3.5 (03.5) of 4.3 (04.3)  0.2% [JA:   3.7 (03.6) of 4.3 (04.3)  0.2% [JA:   3.9 (03.8) of 4.3 (04.3)  0.2% [JA:   4.1 (04.0) of 4.3 (04.3)  0.2% [JA:   4.1 (04.0) of 4.3 (04.3)  0.2% [J
+
+
+Exiting... (End of file)
